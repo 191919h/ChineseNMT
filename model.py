@@ -303,12 +303,13 @@ class Generator(nn.Module):
 
 
 def make_model(src_vocab, tgt_vocab, N=6, d_model=512, d_ff=2048, h=8, dropout=0.1):
+    #深复制
     c = copy.deepcopy
     # 实例化Attention对象
     attn = MultiHeadedAttention(h, d_model).to(DEVICE)
     # 实例化FeedForward对象
     ff = PositionwiseFeedForward(d_model, d_ff, dropout).to(DEVICE)
-    # 实例化PositionalEncoding对象
+    # 实例化PositionalEncoding对象，token的位置信息，sin,cos函数
     position = PositionalEncoding(d_model, dropout).to(DEVICE)
     # 实例化Transformer模型对象
     model = Transformer(
